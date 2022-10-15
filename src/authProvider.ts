@@ -1,13 +1,13 @@
-import { AuthProvider } from "@pankod/refine-core";
+import { AuthProvider } from '@pankod/refine-core';
 
-import { supabaseClient } from "utility";
+import { supabaseClient } from './utility';
 
 const authProvider: AuthProvider = {
   login: async ({ email, password, providerName }) => {
     const { user, error } = await supabaseClient.auth.signIn({
       email,
       password,
-      provider: providerName,
+      provider: providerName
     });
 
     if (error) {
@@ -24,7 +24,7 @@ const authProvider: AuthProvider = {
   register: async ({ email, password }) => {
     const { user, error } = await supabaseClient.auth.signUp({
       email,
-      password,
+      password
     });
 
     if (error) {
@@ -39,7 +39,7 @@ const authProvider: AuthProvider = {
     const { data, error } = await supabaseClient.auth.api.resetPasswordForEmail(
       email,
       {
-        redirectTo: `${window.location.origin}/update-password`,
+        redirectTo: `${window.location.origin}/update-password`
       }
     );
 
@@ -59,7 +59,7 @@ const authProvider: AuthProvider = {
     }
 
     if (data) {
-      return Promise.resolve("/");
+      return Promise.resolve('/');
     }
   },
   logout: async () => {
@@ -69,7 +69,7 @@ const authProvider: AuthProvider = {
       return Promise.reject(error);
     }
 
-    return Promise.resolve("/");
+    return Promise.resolve('/');
   },
   checkError: () => Promise.resolve(),
   checkAuth: async () => {
@@ -95,10 +95,10 @@ const authProvider: AuthProvider = {
     if (user) {
       return Promise.resolve({
         ...user,
-        name: user.email,
+        name: user.email
       });
     }
-  },
+  }
 };
 
 export default authProvider;
